@@ -23,12 +23,13 @@ last update: 23/12/2014
 #include <limits.h> /* PATH_MAX */
 #include <stdlib.h>
 #include <stdio.h>
-#include <cv.h>
-#include <highgui.h>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 #include "EllipseDetectorYaed.h"
 #include <fstream>
-
+#include <iostream>
 
 using namespace std;
 using namespace cv;
@@ -271,9 +272,9 @@ void OnImage(char *image_path)
 {
 	// Check if the file provided is a valid image
 	string filename(image_path);
-	string file_basename = basename(image_path);
-	string ext = file_basename.substr(file_basename.find_last_of(".") + 1);
-	if (!((ext == "jpeg") || (ext == "jpg"))) {
+	// string file_basename = basename(image_path);
+	// string ext = file_basename.substr(file_basename.find_last_of(".") + 1);
+	if (filename.rfind(".jpg") == -1 || filename.rfind(".jpeg") == -1) {
 		cout << "image must be .jpeg or .jpg" << endl;
 		return;
 	}
@@ -477,7 +478,7 @@ void OnDataset()
 	//string sWorkingDir = "D:\\data\\ellipse_dataset\\Prasad Images - Dataset Prasad\\";
 	string out_folder = "D:\\data\\ellipse_dataset\\";
 
-	vector<string> names;
+	vector<String> names;
 
 	vector<float> prs;
 	vector<float> res;
@@ -615,15 +616,15 @@ int main(int argc, char** argv)
 		return 1;
 	}
 	char *unresolved_path = argv[1];
-	char *resolved_path = (char *)malloc(PATH_MAX);
-	realpath(unresolved_path, resolved_path);
+	char *resolved_path = (char *)malloc(4096);
+	// realpath(unresolved_path, resolved_path);
 	// char *extension = (char *)malloc(20);
 	// _splitpath_s(resolved_path, NULL, 0, NULL, 0, NULL, 0, extension, 20);
 	// cout << "file extension: " << extension << endl;
 	// OnVideo();
-	OnImage(resolved_path);
+	OnImage(unresolved_path);
 	//OnDataset();
-	free(resolved_path);
+	free(unresolved_path);
 	// free(extension);
 	return 0;
 }
@@ -633,7 +634,7 @@ int main2()
 {
 	string images_folder = "D:\\SO\\img\\";
 	string out_folder = "D:\\SO\\img\\";
-	vector<string> names;
+	vector<String> names;
 
 	glob(images_folder + "Lo3my4.*", names);
 

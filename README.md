@@ -11,8 +11,13 @@ Michele Fornaciari, Andrea Prati, Rita Cucchiara,
 
 ### How to compile:
 
+- Linux
 ```sh
 g++ Main.cpp EllipseDetectorYaed.cpp common.cpp -o ellipse_det -std=c++11 `pkg-config --cflags --libs opencv`
+```
+- Windows
+```sh
+g++ main.cpp -o demo -I C:\\OpenCv2\\include -L C:\\OpenCv2\\bin -llibopencv_core340 -llibopencv_highgui340 
 ```
 
 ### How to run:
